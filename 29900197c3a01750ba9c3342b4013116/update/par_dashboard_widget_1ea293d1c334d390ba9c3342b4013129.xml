@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="par_dashboard_widget">
+    <par_dashboard_widget action="INSERT_OR_UPDATE">
+        <canvas display_value="">e9aec3d9c3f0d390ba9c3342b40131db</canvas>
+        <component display_value="Donut">a2b0596cec6b9d49dd1ff9bf76b5084b</component>
+        <component_props>{"configVersion":"23.0.0-ci-SNAPSHOT","showDataLabels":false,"dataLabelsType":"both","truncationType":"end","showRegister":true,"registerPosition":"bottom","registerOrientation":"horizontal","showRegisterOnSameLine":false,"showRegisterValue":false,"legendHorizontalAlignment":"center","legendExpandToFit":false,"showRegisterPercentage":false,"showPercentageOfTotalInTooltip":true,"rangesConfig":{},"colorConfig":{"type":"default"},"newReporting":false,"enableAddZerosAtApi":true,"additionalGroupByConfig":[],"dataSources":[{"isDatabaseView":false,"allowRealTime":true,"label":"Major Incident","sourceType":"table","tableOrViewName":"x_78515_intellig_0_major_incident","preferredVisualizations":["d24d53f60350de7a652caf3188a46ed2"],"id":"dGFibGV4Xzc4NTE1X2ludGVsbGlnXzBfbWFqb3JfaW5jaWRlbnQxNzk1NjY3MzQxNjg3","dataCategories":["trend","group","simple"]}],"showHeader":true,"showTotalAggregate":false,"showSubAggregate":false,"showFirstGroupAggregate":false,"showSecondGroupAggregate":false,"hideMatrixAggregate":false,"lineClamp":1,"headerTitleAlignment":"start","wrapTitle":false,"showLoadingIndicator":false,"showHeaderSeparator":false,"contextMenuActions":[],"headerTitle":"Major Incidents by State","headingLevel":2,"showBorder":true,"bareBorder":false,"telemetry":null,"showDataPassthrough":false,"showAdditionalGroupBySelector":false,"allowAdditionalGroupByPerMetric":false,"metrics":[{"dataSource":"dGFibGV4Xzc4NTE1X2ludGVsbGlnXzBfbWFqb3JfaW5jaWRlbnQxNzk1NjY3MzQxNjg3","id":"ZEdGaWJHVjRYemM0TlRFMVgybHVkR1ZzYkdsblh6QmZiV0ZxYjNKZmFXNWphV1JsYm5ReE56azFOalkzTXpReE5qZzMxNzk1NjY3MzQzOTUx","aggregateFunction":"COUNT","numberFormat":{"customFormat":false},"axisId":"primary"}],"groupBy":[{"groupBy":[{"dataSource":"dGFibGV4Xzc4NTE1X2ludGVsbGlnXzBfbWFqb3JfaW5jaWRlbnQxNzk1NjY3MzQxNjg3","groupByField":"state","isRange":false,"isChoice":true,"isPaBucket":false}],"maxNumberOfGroups":10,"numberOfGroupsBasedOn":"NO_OF_GROUP_BASED_ON_PER_METRIC","showOthers":false,"disableRanges":false}],"filterPerMetric":[],"sortBy":"value","sortByOrder":"desc","trendBy":null,"showChange":false,"showChangePercentage":false,"showTarget":false,"showForecast":false,"showForecastRange":false,"showTrend":false,"showConfidenceBand":false,"showGapPercentage":false,"showSparkline":false,"showMetricLabel":false,"showThreshold":false,"showComment":false,"showTotalValue":false,"followFilters":true,"showFilterIcon":true,"enableRealTimeUpdate":false,"enableDrilldown":true,"enableClickAndStay":false,"showDataTable":false,"enableCustomEmptyState":false,"componentId":"882ypguf","emptyStateIllustration":"no-data","emptyStateHeading":"No data available.","emptyStateHeadingLevel":3,"emptyStateContent":"There are no scores available for the selected criteria. Contact your admin for more info.","emptyStateAlignment":"vertical-centered","refreshFrequency":null,"hideDevSettings":false,"configPropModifiers":{},"filterConfigurations":"@state.parFilters","showMaximumRange":false,"allowChangeDateRange":false,"showDateRangeByDefault":false,"applyDateRange":false,"numberOfPeriods":3,"showAbsolutePeriod":false,"autoAggregatePeriods":false,"scoreType":null,"showChangeFrom":"previous","useCurrentDateForEnd":false,"period":"M","useDataCache":false,"cacheExpirationTime":0,"showCacheTime":true,"dateFormat":"default","showRefresh":true,"showExportOptions":true,"showFilterAsSeparateSeries":false,"userInfo":"@context.session.user","colors":{}}</component_props>
+        <h>12</h>
+        <name/>
+        <required_translations>[{"comment":"","message":"Major Incident","code":"PAR_DASHBOARD.e9aec3d9c3f0d390ba9c3342b40131db.1ea293d1c334d390ba9c3342b4013129"},{"comment":"","message":"Major Incidents by State","code":"PAR_DASHBOARD.e9aec3d9c3f0d390ba9c3342b40131db.1ea293d1c334d390ba9c3342b4013129"},{"comment":"","message":"No data available.","code":"PAR_DASHBOARD.e9aec3d9c3f0d390ba9c3342b40131db.1ea293d1c334d390ba9c3342b4013129"},{"comment":"","message":"There are no scores available for the selected criteria. Contact your admin for more info.","code":"PAR_DASHBOARD.e9aec3d9c3f0d390ba9c3342b40131db.1ea293d1c334d390ba9c3342b4013129"}]</required_translations>
+        <stored_component/>
+        <sys_class_name>par_dashboard_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-11-26 04:43:20</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>1ea293d1c334d390ba9c3342b4013129</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_overrides/>
+        <sys_package display_value="Intelligent Major Incident Management" source="x_78515_intellig_0">29900197c3a01750ba9c3342b4013116</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Intelligent Major Incident Management">29900197c3a01750ba9c3342b4013116</sys_scope>
+        <sys_update_name>par_dashboard_widget_1ea293d1c334d390ba9c3342b4013129</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-11-26 04:43:20</sys_updated_on>
+        <visualization/>
+        <w>12</w>
+        <widget_props>{"filterPerMetric":[],"refreshFrequency":null,"headerTitle":"Major Incidents by State"}</widget_props>
+        <x>0</x>
+        <y>0</y>
+    </par_dashboard_widget>
+</record_update>

@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sysauto_script">
+    <sysauto_script action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>true</advanced>
+        <business_calendar/>
+        <condition/>
+        <conditional>false</conditional>
+        <entered_run_end/>
+        <entered_run_start/>
+        <entered_time>1970-01-01 00:00:00</entered_time>
+        <max_drift/>
+        <name>MIM - SLA Breach Monitor</name>
+        <offset/>
+        <offset_type>0</offset_type>
+        <repeat_every/>
+        <run_as display_value="System Administrator">6816f79cc0a8016401c5a33be04be441</run_as>
+        <run_as_tz/>
+        <run_dayofmonth>1</run_dayofmonth>
+        <run_dayofweek>1</run_dayofweek>
+        <run_daysofweek/>
+        <run_end/>
+        <run_month>1</run_month>
+        <run_period>1970-01-01 00:05:00</run_period>
+        <run_start>2026-11-25 14:05:23</run_start>
+        <run_time>1970-01-01 08:00:00</run_time>
+        <run_type>periodically</run_type>
+        <run_weekinmonth>1</run_weekinmonth>
+        <script><![CDATA[(function executeSlaMonitor() {
+
+var now = new GlideDateTime();
+
+var gr = new GlideRecord('x_78515_intellig_0_major_incident');
+gr.query();
+
+var responseCount = 0;
+var resolutionCount = 0;
+var escalationCount = 0;
+
+while (gr.next()) {
+
+var updated = false;
+
+var responseBreached =
+gr.getValue('response_breached') == 'true' ||
+gr.getValue('response_breached') == '1';
+
+var resolutionBreached =
+gr.getValue('resolution_breached') == 'true' ||
+gr.getValue('resolution_breached') == '1';
+
+var acknowledged =
+gr.getValue('response_acknowledged') == 'true' ||
+gr.getValue('response_acknowledged') == '1';
+
+// 1. Check response SLA
+if (gr.getValue('response_due') &&
+!acknowledged &&
+!responseBreached) {
+
+var responseDue = new GlideDateTime(
+gr.getValue('response_due')
+);
+
+if (responseDue.getNumericValue() <
+now.getNumericValue()) {
+
+responseBreached = true;
+gr.setValue('response_breached', true);
+
+responseCount++;
+updated = true;
+}
+}
+
+// 2. Check resolution SLA
+var state = gr.getDisplayValue('state');
+
+if (gr.getValue('resolution_due') &&
+state != 'Resolved' &&
+state != 'Closed' &&
+state != 'Rejected' &&
+!resolutionBreached) {
+
+var resolutionDue = new GlideDateTime(
+gr.getValue('resolution_due')
+);
+
+if (resolutionDue.getNumericValue() <
+now.getNumericValue()) {
+
+resolutionBreached = true;
+gr.setValue('resolution_breached', true);
+
+resolutionCount++;
+updated = true;
+}
+}
+
+// 3. Determine current escalation
+var currentLevel =
+parseInt(gr.getValue('escalation_level'), 10) || 0;
+
+var newLevel = currentLevel;
+
+// Level 1: Response breach
+if (responseBreached && newLevel < 1) {
+newLevel = 1;
+}
+
+// Level 2: 15 minutes after Level 1,
+// if still unresolved and response not acknowledged
+if (currentLevel == 1 &&
+responseBreached &&
+!acknowledged &&
+!resolutionBreached &&
+gr.getValue('escalated_at')) {
+
+var escalatedAt = new GlideDateTime(
+gr.getValue('escalated_at')
+);
+
+var elapsedMinutes =
+(now.getNumericValue() -
+escalatedAt.getNumericValue()) / 60000;
+
+if (elapsedMinutes >= 15) {
+newLevel = 2;
+}
+}
+
+// Level 3: Resolution breach
+if (resolutionBreached && newLevel < 3) {
+newLevel = 3;
+}
+
+// 4. Apply escalation only when level increases
+if (newLevel > currentLevel) {
+
+gr.setValue('escalation_level', String(newLevel));
+gr.setValue('escalated_at', now.getValue());
+
+escalationCount++;
+updated = true;
+
+if (resolutionBreached) {
+gr.setValue('sla_status', 'resolution breached');
+} else if (responseBreached) {
+gr.setValue('sla_status', 'response breached');
+}
+
+// Queue notification event
+gs.eventQueue(
+'x_78515_intellig_0.mim.escalation',
+gr,
+String(newLevel),
+gr.getValue('short_description')
+);
+
+gs.info(
+'MIM ESCALATION: Level ' +
+newLevel +
+' queued for ' +
+gr.getUniqueValue()
+);
+}
+
+// 5. Save record without triggering SLA recalculation
+if (updated) {
+gr.setWorkflow(false);
+gr.update();
+}
+}
+
+gs.info(
+'MIM SLA Monitor: Response breaches=' +
+responseCount +
+', Resolution breaches=' +
+resolutionCount +
+', Escalations=' +
+escalationCount
+);
+
+})();
+
+]]></script>
+        <sys_class_name>sysauto_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-11-25 14:10:49</sys_created_on>
+        <sys_id>79b98091c3bc5390ba9c3342b40131b8</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>MIM - SLA Breach Monitor</sys_name>
+        <sys_package display_value="Intelligent Major Incident Management" source="x_78515_intellig_0">29900197c3a01750ba9c3342b4013116</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Intelligent Major Incident Management">29900197c3a01750ba9c3342b4013116</sys_scope>
+        <sys_update_name>sysauto_script_79b98091c3bc5390ba9c3342b40131b8</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-11-26 03:20:47</sys_updated_on>
+        <time_zone/>
+        <upgrade_safe>false</upgrade_safe>
+    </sysauto_script>
+</record_update>

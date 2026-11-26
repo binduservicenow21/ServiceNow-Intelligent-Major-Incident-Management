@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script">
+    <sys_script action="INSERT_OR_UPDATE">
+        <abort_action>false</abort_action>
+        <access>package_private</access>
+        <action_delete>false</action_delete>
+        <action_insert>true</action_insert>
+        <action_query>false</action_query>
+        <action_update>true</action_update>
+        <active>true</active>
+        <add_message>false</add_message>
+        <advanced>true</advanced>
+        <change_fields>false</change_fields>
+        <client_callable>false</client_callable>
+        <collection>x_78515_intellig_0_major_incident</collection>
+        <condition/>
+        <description/>
+        <execute_function>false</execute_function>
+        <filter_condition/>
+        <is_rest>false</is_rest>
+        <message/>
+        <name>MIM - Calculate SLA</name>
+        <order>200</order>
+        <priority>100</priority>
+        <rest_method/>
+        <rest_method_text/>
+        <rest_service/>
+        <rest_service_text/>
+        <rest_variables/>
+        <role_conditions/>
+        <script><![CDATA[(function executeRule(current, previous /*null when async*/) {
+
+	
+	var priority = current.getValue('priority');
+
+if (!priority) {
+gs.addErrorMessage('MIM SLA: Priority is empty.');
+return;
+}
+
+priority = priority.toLowerCase();
+
+var responseMinutes;
+var resolutionHours;
+
+if (priority == '1') {
+responseMinutes = 5;
+resolutionHours = 1;
+} else if (priority == '2') {
+responseMinutes = 15;
+resolutionHours = 4;
+} else if (priority == '3') {
+responseMinutes = 30;
+resolutionHours = 8;
+} else if (priority == '4') {
+responseMinutes = 60;
+resolutionHours = 24;
+} else {
+gs.addErrorMessage('MIM SLA: Invalid priority: ' + priority);
+return;
+}
+
+var now = new GlideDateTime();
+
+var responseDue = new GlideDateTime();
+responseDue.addSeconds(responseMinutes * 60);
+
+var resolutionDue = new GlideDateTime();
+resolutionDue.addSeconds(resolutionHours * 3600);
+
+current.setValue('response_due', responseDue.getValue());
+current.setValue('resolution_due', resolutionDue.getValue());
+current.setValue('sla_status', 'in progress');
+
+
+if (current.isNewRecord()) {
+current.setValue('response_breached', false);
+current.setValue('resolution_breached', false);
+}
+
+gs.info('MIM SLA DEBUG: Priority=' + priority +
+', Response Due=' + current.getValue('response_due') +
+', Resolution Due=' + current.getValue('resolution_due'));
+
+})(current, previous);]]></script>
+        <sys_class_name>sys_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-11-23 17:27:32</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>9764e228c3b85f50ba9c3342b40131a9</sys_id>
+        <sys_mod_count>19</sys_mod_count>
+        <sys_name>MIM - Calculate SLA</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Intelligent Major Incident Management" source="x_78515_intellig_0">29900197c3a01750ba9c3342b4013116</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Intelligent Major Incident Management">29900197c3a01750ba9c3342b4013116</sys_scope>
+        <sys_update_name>sys_script_9764e228c3b85f50ba9c3342b40131a9</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-11-25 15:36:07</sys_updated_on>
+        <template/>
+        <when>before</when>
+    </sys_script>
+    <sys_translated_text action="delete_multiple" query="documentkey=9764e228c3b85f50ba9c3342b40131a9"/>
+</record_update>
